@@ -1,0 +1,21 @@
+server:
+  port: 8083
+---
+spring:
+    cloud:
+        function:
+            definition: processor
+        stream:
+            bindings:
+                processor-in-0:
+                  destination: order-created
+                processor-out-0:
+                  destination: order-updated      
+            kafka:
+              binder:
+                replication-factor: 1             
+---
+service:
+  endpoints:
+    inventory: http://localhost:8081
+    payment: http://localhost:8082
